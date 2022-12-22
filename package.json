@@ -16,6 +16,7 @@
   "devDependencies": {
     "@types/jest": "^29.2.4",
     "@types/node": "^18.11.17",
+    "@types/validator": "^13.7.10",
     "@typescript-eslint/eslint-plugin": "^5.47.0",
     "@typescript-eslint/parser": "^5.47.0",
     "commitizen": "^4.2.6",
@@ -29,5 +30,8 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "validator": "^13.7.0"
   }
 }
