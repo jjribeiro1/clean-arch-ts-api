@@ -6,6 +6,7 @@ import {
   IAddAccount,
   IAddAccountModel,
 } from './signup-protocols';
+import { serverError } from '../../helper/http-helper';
 
 const makeEmailValidator = (): IEmailValidator => {
   class EmailValidatorStub implements IEmailValidator {
@@ -157,6 +158,9 @@ describe('Signup Controller', () => {
     jest.spyOn(emailValidatorStub, 'isValid').mockImplementationOnce(() => {
       throw new Error();
     });
+    const fakeError = new Error();
+    fakeError.stack = 'any_stack'
+    const stack = fakeError.stack
     const httpRequest = {
       body: {
         name: 'name',
@@ -167,8 +171,7 @@ describe('Signup Controller', () => {
     };
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(500);
-    const fakeError: any = new Error()
-    expect(httpResponse.body).toEqual(new ServerError(fakeError));
+    expect(httpResponse.body).toEqual(new ServerError(stack));
   });
 
   test('Should return 500 if AddAccount throws', async () => {
@@ -176,6 +179,10 @@ describe('Signup Controller', () => {
     jest.spyOn(addAccountStub, 'add').mockImplementationOnce(() => {
       return Promise.reject(new Error());
     });
+    const fakeError = new Error();
+    fakeError.stack = 'any_stack'
+    const stack = fakeError.stack
+
     const httpRequest = {
       body: {
         name: 'name',
@@ -185,9 +192,8 @@ describe('Signup Controller', () => {
       },
     };
     const httpResponse = await sut.handle(httpRequest);
-    const fakeError: any = new Error()
     expect(httpResponse.statusCode).toBe(500);
-    expect(httpResponse.body).toEqual(new ServerError(fakeError));
+    expect(httpResponse.body).toEqual(new ServerError(stack));
   });
 
   test('Should call AddAcount with correct values', async () => {
