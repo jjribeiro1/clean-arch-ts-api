@@ -6,7 +6,7 @@ import { ObjectId } from 'mongodb';
 
 export class AccountMongoRepository implements IAddAccountRepository {
   async add(accountData: IAddAccountModel) {
-    const accountCollection = MongoHelper.getCollection('accounts');
+    const accountCollection = await MongoHelper.getCollection('accounts');
     const result = await accountCollection.insertOne(accountData);
     const id = result.insertedId;
     const dataToReturn = await accountCollection.findOne({ _id: new ObjectId(id) });
