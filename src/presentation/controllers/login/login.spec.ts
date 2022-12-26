@@ -1,7 +1,6 @@
-import { IAuthentication } from '../../../domain/usecases/authentication';
 import { InvalidParamError, MissingParamError } from '../../errors';
 import { badRequest, serverError, unauthorized } from '../../helper/http-helper';
-import { IEmailValidator, IHttpRequest } from '../signup/signup-protocols';
+import { IEmailValidator, IHttpRequest, IAuthentication } from './login-protocols';
 import { LoginController } from './login';
 
 const makeFakeRequest = (): IHttpRequest => ({
