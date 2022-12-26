@@ -1,6 +1,6 @@
 import { IAuthentication } from '../../../domain/usecases/authentication';
 import { InvalidParamError, MissingParamError } from '../../errors';
-import { badRequest, serverError } from '../../helper/http-helper';
+import { badRequest, serverError, unauthorized } from '../../helper/http-helper';
 import { IEmailValidator, IHttpRequest } from '../signup/signup-protocols';
 import { LoginController } from './login';
 
@@ -10,6 +10,7 @@ const makeFakeRequest = (): IHttpRequest => ({
     password: 'any_password',
   },
 });
+
 const makeEmailValidator = (): IEmailValidator => {
   class EmailValidatorStub implements IEmailValidator {
     isValid(email: string): boolean {
@@ -98,5 +99,12 @@ describe('Login Controller', () => {
     const authSpy = jest.spyOn(authenticationStub, 'auth');
     await sut.handle(makeFakeRequest());
     expect(authSpy).toHaveBeenCalledWith('any_email@mail.com', 'any_password');
+  });
+
+  test('Should return 4001 if invalid credentials are provided', async () => {
+    const { sut, authenticationStub} = makeSut();
+    jest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(Promise.resolve(null))
+    const httpResponse = await sut.handle(makeFakeRequest());
+    expect(httpResponse).toEqual(unauthorized());
   });
 });
