@@ -1,7 +1,7 @@
 import { serverError, ok } from '../../presentation/helper/http/http-helper';
 import { IController, IHttpRequest, IHttpResponse } from '../../presentation/protocols';
 import { LogControllerDecorator } from './log';
-import { LogErrorRepository } from '../../data/protocols/log-error-repository';
+import { LogErrorRepository } from '../../data/protocols/db/log-error-repository';
 import { IAccountModel } from '../../domain/models/account';
 
 const makeLogErrorRepository = (): LogErrorRepository => {
