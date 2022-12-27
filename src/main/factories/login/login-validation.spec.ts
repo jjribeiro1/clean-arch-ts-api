@@ -1,7 +1,9 @@
-import { EmailValidation } from '../../../presentation/helper/validators/email-validation';
-import { RequiredFieldValidation } from '../../../presentation/helper/validators/required-field-validation';
+import {
+  EmailValidation,
+  RequiredFieldValidation,
+  ValidationComposite,
+} from '../../../presentation/helper/validators';
 import { IValidation } from '../../../presentation/protocols/validation';
-import { ValidationComposite } from '../../../presentation/helper/validators/validation-composite';
 import { IEmailValidator } from '../../../presentation/protocols/email-validator';
 import { makeLoginValidation } from './login-validation';
 
@@ -23,7 +25,7 @@ describe('Login Validation Factory', () => {
     for (const field of ['email', 'password']) {
       validations.push(new RequiredFieldValidation(field));
     }
-    validations.push(new EmailValidation('email', makeEmailValidator()))
+    validations.push(new EmailValidation('email', makeEmailValidator()));
     expect(ValidationComposite).toHaveBeenCalledWith(validations);
   });
 });

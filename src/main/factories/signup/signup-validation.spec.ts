@@ -1,8 +1,10 @@
-import { CompareFieldsValidation } from '../../../presentation/helper/validators/compare-fields-validation';
-import { EmailValidation } from '../../../presentation/helper/validators/email-validation';
-import { RequiredFieldValidation } from '../../../presentation/helper/validators/required-field-validation';
+import {
+  CompareFieldsValidation,
+  EmailValidation,
+  ValidationComposite,
+  RequiredFieldValidation,
+} from '../../../presentation/helper/validators';
 import { IValidation } from '../../../presentation/protocols/validation';
-import { ValidationComposite } from '../../../presentation/helper/validators/validation-composite';
 import { IEmailValidator } from '../../../presentation/protocols/email-validator';
 import { makeSignUpController } from './signup';
 
@@ -24,8 +26,8 @@ describe('Signup Validation Factory', () => {
     for (const field of ['name', 'email', 'password', 'passwordConfirmation']) {
       validations.push(new RequiredFieldValidation(field));
     }
-    validations.push(new CompareFieldsValidation('password', 'passwordConfirmation'))
-    validations.push(new EmailValidation('email', makeEmailValidator()))
+    validations.push(new CompareFieldsValidation('password', 'passwordConfirmation'));
+    validations.push(new EmailValidation('email', makeEmailValidator()));
     expect(ValidationComposite).toHaveBeenCalledWith(validations);
   });
 });
