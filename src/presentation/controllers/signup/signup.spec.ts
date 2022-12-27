@@ -7,7 +7,7 @@ import {
   IHttpRequest,
   IValidation,
 } from './signup-protocols';
-import { ok, serverError, badRequest } from '../../helper/http-helper';
+import { ok, serverError, badRequest } from '../../helper/http/http-helper';
 
 const makeAddAccount = (): IAddAccount => {
   class AddAccountStub implements IAddAccount {

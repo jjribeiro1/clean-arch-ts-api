@@ -1,4 +1,4 @@
-import { badRequest, ok, serverError, unauthorized } from '../../helper/http-helper';
+import { badRequest, ok, serverError, unauthorized } from '../../helper/http/http-helper';
 import {
   IController,
   IHttpRequest,
