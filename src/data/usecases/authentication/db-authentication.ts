@@ -1,11 +1,11 @@
 import {
   IAuthentication,
   IAuthenticationModel,
-} from '../../../domain/usecases/authentication';
-import { IHashComparer } from '../../protocols/criptography/hash-comparer';
-import { ITokenGenerator } from '../../protocols/criptography/token-generator';
-import { ILoadAccountByEmailRepository } from '../../protocols/db/load-account-by-email-repository';
-import { IUpdateAccessTokenRepository } from '../../protocols/db/update-access-token-repository';
+  ILoadAccountByEmailRepository,
+  IHashComparer,
+  ITokenGenerator,
+  IUpdateAccessTokenRepository,
+} from './db-authentication-protocols';
 
 export class DbAuthentication implements IAuthentication {
   private readonly loadAccountByEmailRepository: ILoadAccountByEmailRepository;
@@ -34,7 +34,7 @@ export class DbAuthentication implements IAuthentication {
       );
       if (passwordIsValid) {
         const accessToken = await this.tokenGenerator.generate(account.id);
-        await this.updateAccessTokenRepository.update(account.id, accessToken)
+        await this.updateAccessTokenRepository.update(account.id, accessToken);
         return accessToken;
       }
     }
