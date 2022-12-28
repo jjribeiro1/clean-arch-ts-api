@@ -8,22 +8,16 @@ import {
 import { badRequest, serverError, ok } from '../../helper/http/http-helper';
 
 export class SignUpController implements IController {
-  private readonly addAccount: IAddAccount;
-  private readonly validation: IValidation;
-
   constructor(
-    addAccount: IAddAccount,
-    validation: IValidation,
-  ) {
-    this.addAccount = addAccount;
-    this.validation = validation;
-  }
+    private readonly addAccount: IAddAccount,
+    private readonly validation: IValidation,
+  ) {}
 
   async handle(httpRequest: IHttpRequest): Promise<IHttpResponse> {
     try {
-      const error = this.validation.validate(httpRequest.body)
+      const error = this.validation.validate(httpRequest.body);
       if (error) {
-        return badRequest(error)
+        return badRequest(error);
       }
       const { name, email, password } = httpRequest.body;
       const account = await this.addAccount.add({
