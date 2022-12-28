@@ -4,16 +4,18 @@ import { IHashComparer } from '../../data/protocols/criptography/hash-comparer';
 
 export class BcryptAdapter implements IHasher, IHashComparer {
   private readonly salt: number;
+
   constructor(salt: number) {
     this.salt = salt;
   }
+
   async hash(value: string): Promise<string> {
     const hashedPassword = await hash(value, this.salt);
-        return hashedPassword;
+    return hashedPassword;
   }
 
   async compare(value: string, hash: string): Promise<boolean> {
-    await compare(value, hash)
+    await compare(value, hash);
     return Promise.resolve(true);
   }
 }
