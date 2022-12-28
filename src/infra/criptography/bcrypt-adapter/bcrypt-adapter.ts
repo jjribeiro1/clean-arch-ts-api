@@ -1,6 +1,6 @@
-import { IHasher } from '../../data/protocols/criptography/hasher';
+import { IHasher } from '../../../data/protocols/criptography/hasher';
 import { hash, compare } from 'bcrypt';
-import { IHashComparer } from '../../data/protocols/criptography/hash-comparer';
+import { IHashComparer } from '../../../data/protocols/criptography/hash-comparer';
 
 export class BcryptAdapter implements IHasher, IHashComparer {
   private readonly salt: number;
